@@ -1,0 +1,17 @@
+ // title: '',
+        // company: '',
+        // location: '',
+        // from: '',
+        // to: '',
+        // current: '',
+        // description: '',
+        // school: '',
+        // degree: '',
+        // fieldofstudy: '',
+        // from: '',
+        // to: '',
+        // current: '',
+        // description: '',
+
+
+        color : #485d94

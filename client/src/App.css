@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Titillium+Web:wght@300&display=swap');
+
+body{
+  font-family: 'Titillium Web', sans-serif;
+}
+h1,h2,h3,h4,h5{
+  font-family: 'Oswald', sans-serif;
+}
+strong{
+  color: #303133;
+}
+
+p{
+  color: #919090  ;
+}
+  .site-layout-content {
+    min-height: 280px;
+    padding: 100px;
+    background: #fff;
+  }
+  #components-layout-demo-top .logo {
+    float: left;
+    width: 120px;
+    /* height: 31px; */
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .ant-row-rtl #components-layout-demo-top .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+  }
+
+  .ant-menu-horizontal{
+    border-bottom: none !important;
+  }
+  .ant-layout-header{
+    background-color: #485d94 !important;
+    width: 100%;
+    position: fixed;
+    height: 65px !important;
+    left: 0;
+    z-index: 1;
+  }
+
+  .ant-menu-item a{
+    color: white !important;
+  }
+
+  /* //Login */
+
+  .site-form-item-icon{
+    opacity: 0.4;
+  }

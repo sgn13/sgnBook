@@ -1,0 +1,35 @@
+.welcome{
+    background-color: #485d94;
+    width: 200px;
+    padding:5px;
+}
+.welcome h3{
+    color: white;
+}
+
+h1{
+    text-align: center;
+}
+/* h1::before{
+    content: '';
+    width: 100px;
+    height: 2px;
+    background-color: orangered;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.5s;
+} */
+
+th{
+    background-color: grey !important;
+    color: white !important;
+}
+tr{
+    background-color: whitesmoke;
+}
+
+.experience-delete:nth-child(odd){
+    position: absolute;
+    right: 90%;
+}

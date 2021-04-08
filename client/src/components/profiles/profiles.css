@@ -1,0 +1,9 @@
+ant-list-bordered.ant-list-sm .ant-list-item {
+    padding: 8px 16px;
+    background-color: aqua;
+}
+
+.ant-list-item{
+        padding: 8px 16px;
+        list-style-type: circle !important; 
+    }
