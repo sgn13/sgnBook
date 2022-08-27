@@ -1,14 +1,17 @@
-import React from 'react'
-import { Form, Input, DatePicker, Switch, Button } from 'antd'
+import React, { useState } from 'react'
+import { Form, Input, DatePicker, Switch, Button, Upload, message } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { addPost } from '../../actions/postActions'
+import { UploadOutlined } from '@ant-design/icons'
 
 const PostForm = (props) => {
     const { user } = props.auth
+    const [image, setImage] = useState("");
     const [form] = Form.useForm()
+
 
     const tailLayout = {
         labelCol: { span: 6 },
@@ -16,10 +19,32 @@ const PostForm = (props) => {
     }
 
     const onFinish = (values) => {
-        values = { ...values, name: user.name, avatar: user.avatar }
-        props.addPost(values)
+        var formData = new FormData()
+        formData.append("text", values.text)
+        formData.append("photo", image)
+        formData.append("name", user.name)
+        formData.append("avatar", user.avatar)
+
+        // values = { ...formData, name: user.name, avatar: user.avatar }
+        props.addPost(formData)
         form.resetFields()
     }
+
+    const propsData = {
+        name: "file",
+        progress: {
+            strokeColor: {
+                "0%": "#108ee9",
+                "100%": "#87d068",
+            },
+            strokeWidth: 3,
+            format: (percent) => `${parseFloat(percent.toFixed(2))}%`,
+        },
+    };
+
+    const handleFileChange = (e) => {
+        setImage(e.target.files[0]);
+    };
 
     return (
         <div>
@@ -40,8 +65,26 @@ const PostForm = (props) => {
                     <TextArea
                         name="text"
                         placeholder="Write something"
+                        rows="4" cols="50"
                     />
+
                 </Form.Item>
+
+                <Form.Item
+                    name="photo"
+                    fileList={image}
+                    onChange={handleFileChange}
+                    beforeUpload={() => false}
+                    maxCount="1"
+                    {...tailLayout}
+                >
+                    <Upload {...propsData}>
+                        <Button icon={<UploadOutlined />}>Upload photo</Button>
+                    </Upload>
+
+                </Form.Item>
+
+
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" danger htmlType="submit">Submit</Button>

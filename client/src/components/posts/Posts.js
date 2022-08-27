@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { getPosts } from '../../actions/postActions'
-import { Card } from 'antd'
 import PostForm from './PostForm'
 import Loading from '../Home/Loading'
 import PostFeed from './PostFeed'
+import { Col, Row } from 'antd'
+import Sidebar from '../sidebar/Sidebar'
+
 
 const Posts = (props) => {
     const { posts, loading } = props.post
-    console.log(props.post);
 
     useEffect(() => {
         props.getPosts()
@@ -36,8 +37,15 @@ const Posts = (props) => {
 
     return (
         <div>
-            <PostForm />
-            {postContent}
+            <Row>
+                <Col span={4}>
+                    <Sidebar />
+                </Col>
+                <Col span={16}>
+                    <PostForm />
+                    {postContent}
+                </Col>
+            </Row>
         </div>
     )
 }

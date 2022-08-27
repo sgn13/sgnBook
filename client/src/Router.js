@@ -13,22 +13,26 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import Chat from './components/Chat/Chat';
+import UpdateMe from './components/Social/UpdateMe';
 
 const Router = () => {
     return (
         <>
-            <PrivateRoute path='/' exact component={Dashboard} />
+            <PrivateRoute path='/profile' exact component={Dashboard} />
+            <PrivateRoute path="/me" component={UpdateMe} />
             <PrivateRoute path="/profiles" component={Profiles} />
             <Route path='/login' component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/profile/:handle" component={Profile} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/myprofile" component={Dashboard} />
             <PrivateRoute path="/post/:id" component={Post} />
-            <PrivateRoute path="/feed" component={Posts} />
+            <PrivateRoute path="/" exact component={Posts} />
             <PrivateRoute path="/create-profile" component={CreateProfile} />
             <PrivateRoute path="/edit-profile" component={EditProfile} />
             <PrivateRoute path="/add-experience" component={AddExperience} />
             <PrivateRoute path="/add-education" component={AddEducation} />
+            <PrivateRoute path="/chat" component={Chat} />
         </>
     )
 }

@@ -4,7 +4,7 @@ import { POST_LOADING, ADD_POST, GET_POST, DELETE_POST, GET_POSTS, GET_ERRORS, C
 export const addPost = postData => async dispatch => {
     dispatch(clearErrors())
     try {
-        const data = await axios.post(`http://localhost:5000/api/posts`, postData)
+        const data = await axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, postData)
 
         if (data) {
             console.log("successfull");
@@ -25,7 +25,7 @@ export const addPost = postData => async dispatch => {
 export const getPosts = () => async dispatch => {
     dispatch(setPostLoading())
     try {
-        const data = await axios.get(`http://localhost:5000/api/posts`)
+        const data = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts`)
 
         if (data) {
             dispatch({
@@ -45,7 +45,7 @@ export const getPosts = () => async dispatch => {
 export const getPost = (id) => async dispatch => {
     dispatch(setPostLoading())
     try {
-        const data = await axios.get(`http://localhost:5000/api/posts/${id}`)
+        const data = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts/${id}`)
 
         if (data) {
             dispatch({
@@ -64,7 +64,7 @@ export const getPost = (id) => async dispatch => {
 //delete post 
 export const deletePost = id => async dispatch => {
     try {
-        const data = await axios.delete(`http://localhost:5000/api/posts/${id}`)
+        const data = await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${id}`)
         if (data) {
             dispatch({
                 type: DELETE_POST,
@@ -82,7 +82,7 @@ export const deletePost = id => async dispatch => {
 //add like 
 export const addLike = id => async dispatch => {
     try {
-        const data = await axios.post(`http://localhost:5000/api/posts/like/${id}`)
+        const data = await axios.post(`${process.env.REACT_APP_API_URL}/api/posts/like/${id}`)
         if (data) {
             dispatch(getPosts())
         }
@@ -98,7 +98,7 @@ export const addLike = id => async dispatch => {
 export const addComment = (postId, commentData) => async dispatch => {
     dispatch(clearErrors())
     try {
-        const data = await axios.post(`http://localhost:5000/api/posts/comment/${postId}`, commentData)
+        const data = await axios.post(`${process.env.REACT_APP_API_URL}/api/posts/comment/${postId}`, commentData)
         if (data) {
             dispatch({
                 type: GET_POST,
@@ -116,7 +116,7 @@ export const addComment = (postId, commentData) => async dispatch => {
 //delete comment 
 export const deleteComment = (postId, commentId) => async dispatch => {
     try {
-        const data = await axios.delete(`http://localhost:5000/api/posts/comment/${postId}/${commentId}`)
+        const data = await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/comment/${postId}/${commentId}`)
         if (data) {
             dispatch({
                 type: GET_POST,
@@ -135,7 +135,7 @@ export const deleteComment = (postId, commentId) => async dispatch => {
 //unlike post 
 export const removeLike = id => async dispatch => {
     try {
-        const data = await axios.post(`http://localhost:5000/api/posts/unlike/${id}`)
+        const data = await axios.post(`${process.env.REACT_APP_API_URL}/api/posts/unlike/${id}`)
         if (data) {
             dispatch(getPosts())
         }

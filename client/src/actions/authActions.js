@@ -9,7 +9,7 @@ import { message } from 'antd'
 //REGISTER USER
 export const registerUser = (userData, history) => async dispatch => {
     try {
-        const data = await axios.post(`http://localhost:5000/api/users/register`, userData)
+        const data = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`, userData)
         if (data) {
             message.success("Successfully registered")
         }
@@ -34,8 +34,7 @@ export const registerUser = (userData, history) => async dispatch => {
 export const loginUser = (userData) => async dispatch => {
 
     try {
-
-        const data = await axios.post(`http://localhost:5000/api/users/login`, userData)
+        const data = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/login`, userData)
         if (data) {
             message.success("You're logged in ")
         }
@@ -48,7 +47,7 @@ export const loginUser = (userData) => async dispatch => {
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
-            payload: error.response.data
+            payload: error.response?.data
         })
     }
 }
@@ -80,4 +79,28 @@ export const logoutUser = (history) => dispatch => {
 
     }
 
+}
+
+
+//LOGIN USER
+
+export const updateUser = (userData) => async dispatch => {
+
+    try {
+        const data = await axios.patch(`${process.env.REACT_APP_API_URL}/api/users/updateMe`, userData)
+        if (data) {
+            message.success("Successfully updated ")
+        }
+        const token = localStorage.getItem('token')
+        console.log(token);
+        const decoded = jwt_decode(token)
+        console.log(decoded);
+        dispatch(setCurrentUser(decoded))
+
+    } catch (error) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: error.response?.data
+        })
+    }
 }

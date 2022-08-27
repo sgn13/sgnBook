@@ -6,8 +6,6 @@ import CommentItem from './CommentItem'
 
 const CommentFeed = (props) => {
     const { comments, postId } = props
-    console.log(props);
-
     return comments.map((comment) => <CommentItem key={comment._id} comment={comment} postId={postId} />)
 }
 CommentFeed.protoTypes = {

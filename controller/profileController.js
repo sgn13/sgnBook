@@ -3,7 +3,7 @@ const Profile = require('../models/Profile')
 
 exports.getProfile = async (req, res) => {
     const user_id = await Profile.findOne({ user: req.user.id })
-    console.log(user_id);
+    // console.log(user_id, "user id ");
 
     if (!user_id) {
         res.status(400).json("There is no profile for this.")
@@ -38,7 +38,6 @@ exports.postProfile = async (req, res) => {
     //
     if (req.body.youtube) profileFields.youtube = req.body.youtube;
     // if (req.body.youtube) profileFields.youtube = req.body.youtube;
-    console.log(profileFields);
 
 
     // const profileUser = Profile.findOne({ user: req.user.id })

@@ -1,6 +1,33 @@
 const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 const mongoose = require('mongoose')
+const multer = require('multer')
+const appError = require('../utils/appError')
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/image/posts')
+    },
+    filename: (req, file, cb) => {
+        const ext = file.mimetype.split('/')[1]
+        cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+    }
+})
+
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
+        cb(null, true)
+    } else {
+        cb(new appError('Not an image! Please upload only image', 400), false)
+    }
+}
+
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+})
+
+exports.uploadPostPhoto = upload.single('photo')
 
 exports.getPost = (req, res) => {
     Post.find()
@@ -38,7 +65,7 @@ exports.likePost = (req, res) => {
         .then(profile => {
             Post.findById(req.params.id)
                 .then((post) => {
-                    console.log(post);
+                    // console.log(post);
 
                     if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
                         return res.status(400).json({ alreadyLiked: "User already liked the post" })
@@ -58,7 +85,7 @@ exports.unlikePost = (req, res) => {
         .then(profile => {
             Post.findById(req.params.id)
                 .then((post) => {
-                    console.log(post);
+                    // console.log(post);
 
                     if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
                         return res.status(400).json({ notLiked: "You have not liked this post yet" })
@@ -77,13 +104,16 @@ exports.unlikePost = (req, res) => {
 }
 
 exports.createPost = (req, res) => {
+    console.log(req.file);
+    console.log(req.body);
     const { user, text, name, avatar } = req.body;
 
     const newPost = new Post({
         user: req.user.id,
         text,
         name,
-        avatar
+        avatar,
+        photo: req.file.filename
     })
     newPost.save().then((post) => res.json(post))
 

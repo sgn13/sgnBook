@@ -74,10 +74,6 @@ const EditProfile = (props) => {
         setData({ company: 'hello' })
     }, [props.profile])
 
-    console.log(data);
-
-
-
 
     return (
         <div>

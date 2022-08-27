@@ -1,0 +1,11 @@
+.right{
+    float: right !important ;
+}
+.ant-list-item:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
+
+  .ant-card-bordered {
+    border: 1px solid #ddd;
+}

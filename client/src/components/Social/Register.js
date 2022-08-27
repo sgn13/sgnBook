@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { connect } from 'react-redux'
 import { registerUser, logoutUser } from '../../actions/authActions'
-import { withRouter, useHistory } from 'react-router-dom'
+import { withRouter, useHistory, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import book from '../../assets/book.jpg'
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 const layout = {
     labelCol: { span: 8 },
@@ -53,65 +55,124 @@ const Register = (props) => {
 
     return (
         <>
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
+            <Row justify="center" align="middle" style={{
+                height: '100vh',
+                backgroundImage: `linear-gradient(to bottom,rgba(105, 105, 105, 0.52), rgba(0, 0, 0, 0.73)),url(${book}) `,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                margin: '-100px'
+            }}>
 
-            >
-                <p>{error.password2}</p>
-                <Form.Item
-                    label="Username"
-                    name="name"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
-                >
-                    <Input
-                        name="name"
-                        onChange={onChange}
-                    />
-                </Form.Item>
+                <div className="rounded-2xl bg-gray-100 shadow-2xl py-8 px-6 m-2 lg:py-24 lg:px-12 border border-gray-200">
+                    <h3 className="text-gray-500 text-center mb-4">Register</h3>
 
-                <Form.Item
-                    label="email"
-                    name="email"
-                    rules={[{ required: true, message: 'Please input your email!' }]}
-                >
-                    <Input
-                        name="email"
-                        onChange={onChange}
-                    />
-                </Form.Item>
+                    <Form
+                        name="basic"
+                        layout="vertical"
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
 
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                    <Input.Password
-                        name="password"
-                        onChange={onChange}
-                    />
-                </Form.Item>
+                    >
+                        <p>{error.password2}</p>
+                        <Row gutter={24}>
+                            <Col span={12} >
+                                <Form.Item
+                                    label="Username"
+                                >
 
-                <Form.Item
-                    label="Confirm Password"
-                    name="password2"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                    <Input.Password
-                        name="password2"
-                        onChange={onChange}
-                    />
-                </Form.Item>
+                                    <Form.Item
+                                        noStyle
+                                        name="name"
+                                        rules={[{ required: true, message: 'Please input your username!' }]}
+                                    >
+                                        <Input
+                                            prefix={<UserOutlined className="site-form-item-icon" />}
+                                            placeholder="Username"
+                                            name="name"
+                                            onChange={onChange}
+                                        />
+                                    </Form.Item>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12} >
+                                <Form.Item
+                                    label="Email"
+                                >
+                                    <Form.Item
+                                        noStyle
+                                        name="email"
+                                        rules={[
+                                            { required: true, message: 'Please input your email' },
+                                            { type: 'email', message: 'Invalid email' },
+                                        ]}
+                                    >
+                                        <Input
+                                            prefix={<UserOutlined className="site-form-item-icon" />}
+                                            placeholder="Email"
+                                            name="email"
+                                            onChange={onChange}
+                                        />
+                                    </Form.Item>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Form.Item
+                            label="Password"
+                        >
+                            <Form.Item
+                                noStyle
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your password!' }]}
+                            >
+                                <Input.Password
+                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    name="password"
+                                    placeholder="Password"
+                                    onChange={onChange}
+                                />
+                            </Form.Item>
+                        </Form.Item>
+                        <Form.Item
+                            label="Confirm Password"
+                        >
+                            <Form.Item
+                                noStyle
+                                name="password2"
+                                hasFeedback
+                                rules={[
+                                    { required: true, message: 'Please input your password!' },
+                                    ({ getFieldValue }) => ({
+                                        validator(_, value) {
+                                            if (!value || getFieldValue('password') === value) {
+                                                return Promise.resolve();
+                                            }
 
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
+                                            return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                                        },
+                                    }),
+                                ]}
+                            >
+                                <Input.Password
+                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    placeholder="Confirm Password"
+                                    name="password2"
+                                    onChange={onChange}
+                                />
+                            </Form.Item>
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+                                Submit
           </Button>
-                </Form.Item>
-            </Form>
+                        </Form.Item>
+                        <Link to="/login">Back to login </Link>
+
+                    </Form>
+                </div>
+
+            </Row>
         </>
     )
 }

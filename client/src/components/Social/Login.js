@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Checkbox, Col, Row, message } from 'antd';
+import { Form, Input, Button, Col, Row } from 'antd';
 import { connect } from 'react-redux'
 import { loginUser } from '../../actions/authActions'
-import { useHistory } from "react-router-dom";
-import PropTypes, { object } from 'prop-types'
+import { Link, useHistory } from "react-router-dom";
+import PropTypes from 'prop-types'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import book from '../../assets/book.jpg'
 
 const Login = (props) => {
 
@@ -16,7 +17,6 @@ const Login = (props) => {
     // const [error, setError] = useState()
     const [form] = Form.useForm();
 
-
     // const check = Object.keys(error).length
     // console.log(check);
     // if (check === 0) {
@@ -25,7 +25,7 @@ const Login = (props) => {
 
     useEffect(() => {
         if (props.auth.isAuthenticated) {
-            history.push("/dashboard");
+            history.push("/");
         }
     }, [props.auth.isAuthenticated])
 
@@ -42,60 +42,83 @@ const Login = (props) => {
     }
 
     return (
-        <Row justify="center" align="middle" style={{ height: '100vh' }}>
+        <Row justify="center" align="middle" style={{
+            height: '100vh',
+            backgroundImage: `linear-gradient(to bottom,rgba(105, 105, 105, 0.52), rgba(0, 0, 0, 0.73)),url(${book}) `,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            margin: '-100px'
+        }}>
             <Col span={6} >
-                <Form
-                    // {...layout}
-                    form={form}
-                    name="basic"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    layout="vertical"
-                    onFinishFailed={onFinishFailed}
-                >
-                    <Form.Item label="Email" style={{ marginBottom: 0 }}>
-                        <Form.Item
-                            name="email"
-                            rules={[
-                                { required: true, message: 'Please input your email' },
-                                { type: 'email', message: 'Invalid email' },
-                            ]}
-                        >
-                            <Input
-                                prefix={<UserOutlined className="site-form-item-icon" />}
+                {/* <h1 className="text-gray-200">SGNBOOK</h1> */}
+
+                <div className="rounded-2xl bg-gray-100 shadow-2xl py-8 px-6 m-2 lg:py-24 lg:px-12 border border-gray-200">
+                    <h3 className="text-gray-500 text-center mb-4">Login</h3>
+
+                    <Form
+                        // {...layout}
+                        form={form}
+                        name="basic"
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        layout="vertical"
+                        onFinishFailed={onFinishFailed}
+                    >
+                        <Form.Item label="Email">
+                            <Form.Item
+                                noStyle
                                 name="email"
-                                value={formData.email}
-                                onChange={onChange}
-                                placeholder="Email"
-                            />
+                                rules={[
+                                    { required: true, message: 'Please input your email' },
+                                    { type: 'email', message: 'Invalid email' },
+                                    // { validator: checkError }
+                                ]}
+                            >
+                                <Input
+                                    prefix={<UserOutlined className="site-form-item-icon" />}
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={onChange}
+                                    placeholder="Email"
+                                />
+
+                            </Form.Item>
+                            {props.errors.email && <p style={{ color: "red", marginTop: "-1rem" }}>
+                                * {props.errors.email}
+                            </p>}
 
                         </Form.Item>
-                    </Form.Item>
 
-                    <Form.Item label="Password" style={{ marginBottom: 0 }}>
-                        <Form.Item
-                            name="password"
-                            rules={[
-                                { required: true, message: 'Please input your password!' },
-                            ]}
-                        >
-                            <Input.Password
-                                prefix={<LockOutlined className="site-form-item-icon" />}
+                        <Form.Item label="Password">
+                            <Form.Item
+                                noStyle
                                 name="password"
-                                onChange={onChange}
-                                placeholder="Password"
-                            />
-                        </Form.Item>
-                    </Form.Item>
+                                rules={[
+                                    { required: true, message: 'Please input your password!' },
+                                ]}
+                            >
+                                <Input.Password
+                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    name="password"
+                                    onChange={onChange}
+                                    placeholder="Password"
+                                />
 
-                    <Form.Item >
-                        <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-                            Submit
+                            </Form.Item>
+                            {props.errors.password && <p style={{ color: "red", marginTop: "-1rem" }}>
+                                * {props.errors.password}
+                            </p>}
+                        </Form.Item>
+
+
+                        <Form.Item >
+                            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+                                Submit
                         </Button>
-                        <h1>{props.errors.email}</h1>
-                        <h1>{props.auth.user?.name}</h1>
-                    </Form.Item>
-                </Form>
+                        </Form.Item>
+                        <Link to="/register">Don't have an account ?</Link>
+                    </Form>
+                </div>
             </Col>
         </Row >
     )

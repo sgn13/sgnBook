@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const passport = require('passport')
 const postController = require('../../controller/postController')
+const authController = require('../../controller/authController')
 
 //@route    GET api/posts/
 //@desc     Fetch Posts
@@ -41,6 +42,7 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session
 //@route    POST api/posts/
 //@desc     Create Posts
 //@access   PRIVATE
-router.post('/', passport.authenticate('jwt', { session: false }), postController.createPost)
+// router.post('/', passport.authenticate('jwt', { session: false }), postController.createPost)
+router.post('/', authController.protect, postController.uploadPostPhoto, postController.createPost)
 
 module.exports = router;

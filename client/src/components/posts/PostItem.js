@@ -8,9 +8,8 @@ import { Card, Col, Row, Popover } from 'antd'
 
 const PostItem = (props) => {
     const { post, auth, showActions } = props
-    console.log(props);
-
     const [hide, setHide] = useState(false)
+    console.log(post);
 
     const handleDeleteClick = (id) => {
         if (window.confirm("Do you sure wanna delete your post?")) {
@@ -40,12 +39,22 @@ const PostItem = (props) => {
 
     }
 
+    const configureImage = (image) => {
+        // const id = this.props.payload._id;
+        return `http://localhost:5000/static/` + image;
+    };
+
+    const configureAvatarImage = (image) => {
+        // const id = this.props.payload._id;
+        return `http://localhost:5000/staticUser/` + image;
+    };
+
     return (
         <div>
-            <Col span={12} offset={6}>
-                <Card style={{ border: '1px solid #4444', margin: '50px 0' }}>
+            <Col span={15} offset={5}>
+                <Card style={{ border: '1px solid #ddd', borderRadius: '1rem', margin: '50px 0' }} className="shadow ">
                     <Row style={{ marginBottom: '1rem' }}>
-                        <img src={post.avatar} width="40px" style={{ borderRadius: '50%', marginRight: '1rem' }} alt="" />
+                        <img src={configureAvatarImage(`${props.auth.user.avatar}`)} width="40px" style={{ borderRadius: '50%', marginRight: '1rem' }} alt="" />
                         <strong>{post.name}</strong>
                         <Col offset={19}>
                             <Popover
@@ -65,6 +74,8 @@ const PostItem = (props) => {
                         </Col>
                     </Row>
                     <p>{post.text}</p>
+                    {post.photo && <img src={configureImage(`${post.photo}`)} alt="Unknown" />}
+                    <br />
                     <p style={{ fontSize: '10px' }}> <span>{post.likes.length} Likes</span> &nbsp;  &nbsp;<span>{post.comments.length} Comment</span></p>
 
 

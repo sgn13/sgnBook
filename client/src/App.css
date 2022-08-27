@@ -3,20 +3,24 @@
 body{
   font-family: 'Titillium Web', sans-serif;
 }
-h1,h2,h3,h4,h5{
-  font-family: 'Oswald', sans-serif;
-}
+/* h1,h2,h3,h4,h5{
+  font-weight: ;
+} */
 strong{
   color: #303133;
+}
+
+a{
+  text-decoration: none !important;
 }
 
 p{
   color: #919090  ;
 }
   .site-layout-content {
-    min-height: 280px;
+    min-height: 100vh;
     padding: 100px;
-    background: #fff;
+    background: #eee;
   }
   #components-layout-demo-top .logo {
     float: left;
@@ -34,7 +38,7 @@ p{
     border-bottom: none !important;
   }
   .ant-layout-header{
-    background-color: #485d94 !important;
+    background-color: #1d8aa8 !important;
     width: 100%;
     position: fixed;
     height: 65px !important;
@@ -43,6 +47,16 @@ p{
   }
 
   .ant-menu-item a{
+    color: white !important;
+  }
+
+  .ant-menu-item a:hover{
+    color: wheat !important;
+  }
+
+  .ant-btn-primary,.ant-btn{
+    background-color: #1d8aa8 !important;
+    border-color: #1d8aa8 !important;
     color: white !important;
   }
 

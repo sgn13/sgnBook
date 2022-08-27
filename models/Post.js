@@ -16,6 +16,9 @@ const PostSchema = new Schema({
     avatar: {
         type: String,
     },
+    photo: {
+        type: String,
+    },
     likes: [{
         user: {
             type: Schema.Types.ObjectId,
